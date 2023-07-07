@@ -10,6 +10,8 @@ import functools
 import json
 import logging
 import random
+import secrets
+
 import requests
 import requests.adapters
 import snscrape.utils
@@ -215,6 +217,9 @@ class Scraper:
 		errors = []
 		for attempt in range(self._retries + 1):
 			# The request is newly prepared on each retry because of potential cookie updates.
+			csrf_token = secrets.token_hex(16)
+			self._session.cookies.set("ct0", csrf_token, domain=".twitter.com", path="/", secure=True)
+			headers["x-csrf-token"] = csrf_token
 			req = self._session.prepare_request(requests.Request(method, url, params = params, data = data, headers = headers))
 			environmentSettings = self._session.merge_environment_settings(req.url, proxies, None, None, None)
 			_logger.info(f'Retrieving {req.url}')
