@@ -1886,14 +1886,14 @@ class TwitterProfileScraper(TwitterUserScraper):
 			'responsive_web_media_download_video_enabled': False,
 			'responsive_web_enhance_cards_enabled': False,
 		}
-		fieldToggles = {'withArticleRichContentState': False}
+		fieldToggles = {'withAuxiliaryUserLabels': False, 'withArticleRichContentState': False}
 
 		params = {'variables': variables, 'features': features, 'fieldToggles': fieldToggles}
 		paginationParams = {'variables': paginationVariables, 'features': features, 'fieldToggles': fieldToggles}
 
 		gotPinned = False
 		previousPagesTweetIds = set()
-		for obj in self._iter_api_data('https://twitter.com/i/api/graphql/RB2KVuVBRZe4GW8KkoVF2A/UserTweetsAndReplies', _TwitterAPIType.GRAPHQL, params, paginationParams, instructionsPath = ['data', 'user', 'result', 'timeline_v2', 'timeline', 'instructions']):
+		for obj in self._iter_api_data('https://twitter.com/i/api/graphql/uYU5M2i12UhDvDTzN6hZPg/UserTweetsAndReplies', _TwitterAPIType.GRAPHQL, params, paginationParams, instructionsPath = ['data', 'user', 'result', 'timeline_v2', 'timeline', 'instructions']):
 			if not obj['data'] or 'result' not in obj['data']['user']:
 				raise snscrape.base.ScraperException('Empty response')
 			if obj['data']['user']['result']['__typename'] == 'UserUnavailable':
