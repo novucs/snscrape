@@ -215,7 +215,9 @@ class Scraper:
 			headers['User-Agent'] = _DEFAULT_USER_AGENT
 		proxies = proxies or self._proxies or {}
 		errors = []
-		for attempt in range(self._retries + 1):
+		attempt = 0
+		while attempt <= self._retries:
+			attempt += 1
 			# The request is newly prepared on each retry because of potential cookie updates.
 			csrf_token = secrets.token_hex(16)
 			self._session.cookies.set("ct0", csrf_token, domain=".twitter.com", path="/", secure=True)
