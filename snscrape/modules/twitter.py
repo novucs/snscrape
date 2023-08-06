@@ -815,6 +815,14 @@ class _TwitterAPIScraper(snscrape.base.Scraper):
 		self._session.mount('https://api.twitter.com', adapter)
 
 	def _check_guest_token_response(self, r):
+		if r.status_code in (403, 404, 429):
+			if r.status_code == 429 and r.headers.get('x-rate-limit-remaining', '') == '0' and 'x-rate-limit-reset' in r.headers:
+				blockUntil = min(int(r.headers['x-rate-limit-reset']), int(time.time()) + 900)
+			else:
+				blockUntil = int(time.time()) + 300
+			duration = blockUntil - time.time()
+			_logger.info(f"sleeping for {duration} seconds, waiting out guest token timeout")
+			time.sleep(duration)
 		if r.status_code != 200:
 			return False, ('non-200 response' if r.status_code != 404 else 'blocked') + f' ({r.status_code})'
 		return True, None
