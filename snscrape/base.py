@@ -268,7 +268,7 @@ class Scraper:
 						level = logging.ERROR
 					_logger.log(level, f'Error retrieving {req.url}{msg}{retrying}')
 			if attempt < self._retries:
-				sleepTime = min(1.0 * 2**attempt, 60) # exponential backoff: sleep 1 second after first attempt, 2 after second, 4 after third, etc.
+				sleepTime = 1
 				_logger.info(f'Waiting {sleepTime:.0f} seconds')
 				time.sleep(sleepTime)
 		else:
