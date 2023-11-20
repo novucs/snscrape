@@ -211,6 +211,11 @@ class Card:
 
 
 @dataclasses.dataclass
+class CardRef(Card):
+	id: str
+
+
+@dataclasses.dataclass
 class SummaryCard(Card):
 	title: str
 	url: str
@@ -1140,6 +1145,10 @@ class _TwitterAPIScraper(snscrape.base.Scraper):
 		bindingValues = {}
 
 		userRefs = {}
+
+		if 'legacy' not in card:
+			return CardRef(id=card['rest_id'])
+
 		for o in card['legacy'].get('user_refs_results', []):
 			if 'result' not in o:
 				_logger.warning(f'Empty user ref object in card on tweet {tweetId}')
