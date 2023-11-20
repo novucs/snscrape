@@ -1903,7 +1903,7 @@ class TwitterProfileScraper(TwitterUserScraper):
 		previousPagesTweetIds = set()
 		for obj in self._iter_api_data('https://twitter.com/i/api/graphql/YlkSUg0mRBx7-EkxCvc-bw/UserTweetsAndReplies', _TwitterAPIType.GRAPHQL, params, paginationParams, instructionsPath = ['data', 'user', 'result', 'timeline_v2', 'timeline', 'instructions']):
 			if not obj['data'] or 'result' not in obj['data']['user']:
-				raise snscrape.base.ScraperException('Empty response')
+				raise snscrape.base.EntityUnavailable('Empty response')
 			if obj['data']['user']['result']['__typename'] == 'UserUnavailable':
 				raise snscrape.base.EntityUnavailable('User unavailable')
 			instructions = obj['data']['user']['result']['timeline_v2']['timeline']['instructions']
