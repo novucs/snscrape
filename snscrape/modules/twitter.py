@@ -1520,7 +1520,7 @@ class _TwitterAPIScraper(snscrape.base.Scraper):
 		if 'retweeted_status_result' in tweet:
 			#TODO Tombstones will cause a crash here.
 			kwargs['retweetedTweet'] = self._graphql_timeline_tweet_item_result_to_tweet(tweet['retweeted_status_result']['result'])
-		if 'quoted_status_result' in result:
+		if 'quoted_status_result' in result and result['quoted_status_result'] != {}:
 			if 'result' not in result['quoted_status_result']:
 				_logger.warning(f'quoted_status_result for {tweet["quoted_status_id_str"]} without an actual result on tweet {self._get_tweet_id(tweet)}, using TweetRef')
 				kwargs['quotedTweet'] = TweetRef(int(tweet['quoted_status_id_str']))
