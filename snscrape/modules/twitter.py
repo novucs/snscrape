@@ -1019,9 +1019,9 @@ class _TwitterAPIScraper(snscrape.base.Scraper):
 		if links:
 			kwargs['links'] = [TextLink(
 			                     text = u.get('display_url'),
-			                     url = u['expanded_url'],
-			                     tcourl = u['url'],
-			                     indices = tuple(u['indices']),
+			                     url = u.get('expanded_url'),
+			                     tcourl = u.get('url'),
+			                     indices = tuple(u.get('indices')),
 			                   ) for u in links]
 		kwargs['url'] = f'https://twitter.com/{getattr(user, "username", "i/web")}/status/{tweetId}'
 		kwargs['replyCount'] = tweet['reply_count']
