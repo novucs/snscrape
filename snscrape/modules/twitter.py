@@ -139,9 +139,9 @@ class Tweet(snscrape.base.Item):
 
 	username = snscrape.base._DeprecatedProperty('username', lambda self: getattr(self.user, 'username', None), 'user.username')
 	outlinks = snscrape.base._DeprecatedProperty('outlinks', lambda self: [x.url for x in self.links] if self.links else [], 'links (url attribute)')
-	outlinksss = snscrape.base._DeprecatedProperty('outlinksss', lambda self: ' '.join(x.url for x in self.links) if self.links else '', 'links (url attribute)')
+	outlinksss = snscrape.base._DeprecatedProperty('outlinksss', lambda self: ' '.join(x.url for x in self.links if x.url) if self.links else '', 'links (url attribute)')
 	tcooutlinks = snscrape.base._DeprecatedProperty('tcooutlinks', lambda self: [x.tcourl for x in self.links] if self.links else [], 'links (tcourl attribute)')
-	tcooutlinksss = snscrape.base._DeprecatedProperty('tcooutlinksss', lambda self: ' '.join(x.tcourl for x in self.links) if self.links else '', 'links (tcourl attribute)')
+	tcooutlinksss = snscrape.base._DeprecatedProperty('tcooutlinksss', lambda self: ' '.join(x.tcourl for x in self.links if x.tcourl) if self.links else '', 'links (tcourl attribute)')
 	content = snscrape.base._DeprecatedProperty('content', lambda self: self.rawContent, 'rawContent')
 
 	def __str__(self):
