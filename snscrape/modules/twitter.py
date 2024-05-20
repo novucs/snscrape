@@ -1603,8 +1603,7 @@ class _TwitterAPIScraper(snscrape.base.Scraper):
 		out = []
 		out.append(text[:urls[0]['indices'][0]])
 		urlsSorted = sorted(urls, key = lambda x: x['indices'][0]) # Ensure that they're in left to right appearance order
-		assert all(url['indices'][1] <= nextUrl['indices'][0] for url, nextUrl in zip(urls, urls[1:])), 'broken URL indices'
-		for url, nextUrl in itertools.zip_longest(urls, urls[1:]):
+		for url, nextUrl in itertools.zip_longest(urlsSorted, urlsSorted[1:]):
 			if 'display_url' in url:
 				out.append(url['display_url'])
 			out.append(text[url['indices'][1] : nextUrl['indices'][0] if nextUrl is not None else None])
